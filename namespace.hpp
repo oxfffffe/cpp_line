@@ -1,4 +1,4 @@
-namespace __namespace
+namespace lightning
 {
 	class line;
 	void swap(line&, line&);

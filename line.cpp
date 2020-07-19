@@ -1,7 +1,7 @@
 #include "line.hpp"
 #include "defines.hpp"
 
-__namespace::line::line(const char* string)
+lightning::line::line(const char* string)
 {
 	unsigned short length = strlen(string);
 	this->__str = new char[length + 1];
@@ -12,18 +12,18 @@ __namespace::line::line(const char* string)
 	this->__str[length] = '\0';
 }
 
-std::ostream& __namespace::operator<<(std::ostream& out, const line& string)
+std::ostream& lightning::operator<<(std::ostream& out, const line& string)
 {
 	return out << string.__str;
 }
 
-std::istream& __namespace::operator>>(std::istream& in , line& string)
+std::istream& lightning::operator>>(std::istream& in , line& string)
 {
 	string = "";
 	return in.getline(string.__str, 256);
 }
 
-__namespace::line __namespace::line::operator+(line& other)
+lightning::line lightning::line::operator+(line& other)
 {
 	unsigned short other_length = strlen(other.__str);
 	line new_string;
@@ -41,7 +41,7 @@ __namespace::line __namespace::line::operator+(line& other)
 	return new_string;
 }
 
-__namespace::line __namespace::line::operator+(const char* other)
+lightning::line lightning::line::operator+(const char* other)
 {
 	unsigned short other_length = strlen(other);
 	line new_string;
@@ -59,7 +59,7 @@ __namespace::line __namespace::line::operator+(const char* other)
 	return new_string;
 }
 
-void __namespace::line::operator+=(line& other)
+void lightning::line::operator+=(line& other)
 {
 	unsigned short other_length = strlen(other.__str);
 	unsigned short i = 0;
@@ -73,7 +73,7 @@ void __namespace::line::operator+=(line& other)
 	}
 }
 
-void __namespace::line::operator+=(const char* other)
+void lightning::line::operator+=(const char* other)
 {
 	unsigned short other_length = strlen(other);
 	unsigned short i = 0;
@@ -87,32 +87,32 @@ void __namespace::line::operator+=(const char* other)
 	}
 }
 
-bool __namespace::line::operator==(line& other)
+bool lightning::line::operator==(line& other)
 {
 	return !strcmp(this->__str, other.__str);
 }
 
-bool __namespace::line::operator==(const char* other)
+bool lightning::line::operator==(const char* other)
 {
 	return !strcmp(this->__str, other);
 }
 
-bool __namespace::line::operator!=(line &other)
+bool lightning::line::operator!=(line &other)
 {
 	return strcmp(this->__str, other.__str);
 }
 
-bool __namespace::line::operator!=(const char* other)
+bool lightning::line::operator!=(const char* other)
 {
 	return strcmp(this->__str, other);
 }
 
-char* __namespace::line::to_upper()
+char* lightning::line::to_upper()
 {
 	for (unsigned short i = 0; i < strlen(this->__str); i++)
 	{
 		if (this->__str[i] > __a &&
-		    this->__str[i] < __z)
+			this->__str[i] < __z)
 		{
 			this->__str[i] -= 32;
 		}
@@ -120,12 +120,12 @@ char* __namespace::line::to_upper()
 	return this->__str;
 }
 
-char* __namespace::line::to_lower()
+char* lightning::line::to_lower()
 {
 	for (unsigned short i = 0; i < strlen(this->__str); i++)
 	{
 		if (this->__str[i] > __A &&
-		    this->__str[i] < __Z)
+			this->__str[i] < __Z)
 		{
 			this->__str[i] += 32;
 		}
@@ -133,7 +133,7 @@ char* __namespace::line::to_lower()
 	return this->__str;
 }
 
-char* __namespace::line::reverse()
+char* lightning::line::reverse()
 {
 	unsigned short length = strlen(this->__str);
 	for (unsigned short i = 0; i < length/2; i++)
@@ -145,7 +145,7 @@ char* __namespace::line::reverse()
 	return this->__str;
 }
 
-char* __namespace::line::replace(const char* what, const char* with)
+char* lightning::line::replace(const char* what, const char* with)
 {
 	char* found = strstr(this->__str, what);
 	char buffer[256];
@@ -173,18 +173,17 @@ char* __namespace::line::replace(const char* what, const char* with)
 	return this->__str;
 }
 
-char* __namespace::line::replace(std::regex regex, const char* with)
+char* lightning::line::replace(std::regex regex, const char* with)
 {
 	std::string matched = std::regex_replace(this->__str, regex, with);
 	char* result = new char[matched.length() + 1];
-	strcpy(result, matched.c_str());
-	return result;
+	return strcpy(result, matched.c_str());
 }
 
-char* __namespace::line::cut(const char* what)
+char* lightning::line::cut(const char* what)
 {
 	char* found = strstr(this->__str, what);
-	char buffer[255];
+	char buffer[256];
 	while (found && (found = strstr(this->__str, what)))
 	{
 		if (found)
@@ -199,7 +198,7 @@ char* __namespace::line::cut(const char* what)
 	return this->__str;
 }
 
-unsigned short __namespace::line::length()
+unsigned short lightning::line::length()
 {
 	unsigned short length = 0;
 	while (this->__str[length] != '\0')
@@ -209,20 +208,20 @@ unsigned short __namespace::line::length()
 	return length;
 }
 
-const char* __namespace::line::clear()
+const char* lightning::line::clear()
 {
 	return "";
 }
 
-void __namespace::swap(line& what, line& with)
+void lightning::swap(line& what, line& with)
 {
 	line tmp = with;
 	with = what;
 	what = tmp;
 }
 
-__namespace::line::~line()
+lightning::line::~line()
 {
-	if (!this->__str)
+	if (this->__str == NULL)
 		delete[] this->__str;
 }

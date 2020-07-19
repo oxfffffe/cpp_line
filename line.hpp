@@ -4,7 +4,7 @@
 #include <regex>
 #include "namespace.hpp"
 
-class __namespace::line
+class lightning::line
 {
 public:
 	line(){};

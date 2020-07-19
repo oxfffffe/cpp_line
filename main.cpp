@@ -1,16 +1,18 @@
 #include "line.hpp"
 #include "defines.hpp"
 
+using namespace lightning;
+
 int main(void)
 {
 #ifdef	__START_TIME
-	__START_TIME
+		__START_TIME
 #endif
 #ifdef	__DEBUG
-	__namespace::line a = "a line";
-	__namespace::line b = "b line";
-	__namespace::swap(a, b);
-	__namespace::swap(b, a);
+	line a = "a line";
+	line b = "b line";
+	swap(a, b);
+	swap(b, a);
 	std::cout << "first string: \t\t\t\t" << a << std::endl;
 	std::cout << "second string: \t\t\t\t" << b << std::endl;
 	std::cout << "cut symbol \"e\" from first string: \t" << a.cut("e") << std::endl;
@@ -24,11 +26,11 @@ int main(void)
 	std::cout << "concatenate first string with itself: \t" << a + a << std::endl;
 	std::cout << "concatenate first string with \"text\": \t" << a + " another text\t" << std::endl;
 	std::cout << "first string == itself: \t\t" << (a == a) << std::endl;
-	std::cout << "first string == itself: \t\t" << (a != a) << std::endl;
+	std::cout << "first string != itself: \t\t" << (a != a) << std::endl;
 	std::cout << "first string == \"example text\": \t" << (a == "example text") << std::endl;
 	std::cout << "first string != \"example text\": \t" << (a != "example text") << std::endl;
 #endif//__DEBUG
 #ifdef	__FINISHED_AT
-	__FINISHED_AT
+		__FINISHED_AT
 #endif
 }
