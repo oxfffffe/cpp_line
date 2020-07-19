@@ -112,9 +112,9 @@ char* lightning::line::to_upper()
 	for (unsigned short i = 0; i < strlen(this->__str); i++)
 	{
 		if (this->__str[i] > __a &&
-			this->__str[i] < __z)
+		    this->__str[i] < __z)
 		{
-			this->__str[i] -= 32;
+		    this->__str[i] -= 32;
 		}
 	}
 	return this->__str;
@@ -125,9 +125,9 @@ char* lightning::line::to_lower()
 	for (unsigned short i = 0; i < strlen(this->__str); i++)
 	{
 		if (this->__str[i] > __A &&
-			this->__str[i] < __Z)
+		    this->__str[i] < __Z)
 		{
-			this->__str[i] += 32;
+		    this->__str[i] += 32;
 		}
 	}
 	return this->__str;
