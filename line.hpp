@@ -2,8 +2,9 @@
 
 #include <iostream>
 #include <regex>
+#include "namespace.hpp"
 
-class line
+class __namespace::line
 {
 public:
 	line(){};

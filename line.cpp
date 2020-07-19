@@ -1,7 +1,7 @@
 #include "line.hpp"
 #include "defines.hpp"
 
-line::line(const char* string)
+__namespace::line::line(const char* string)
 {
 	unsigned short length = strlen(string);
 	this->__str = new char[length + 1];
@@ -12,18 +12,18 @@ line::line(const char* string)
 	this->__str[length] = '\0';
 }
 
-std::ostream& operator<<(std::ostream& out, const line& string)
+std::ostream& __namespace::operator<<(std::ostream& out, const line& string)
 {
 	return out << string.__str;
 }
 
-std::istream& operator>>(std::istream& in , line& string)
+std::istream& __namespace::operator>>(std::istream& in , line& string)
 {
 	string = "";
 	return in.getline(string.__str, 256);
 }
 
-line line::operator+(line& other)
+__namespace::line __namespace::line::operator+(line& other)
 {
 	unsigned short other_length = strlen(other.__str);
 	line new_string;
@@ -41,7 +41,7 @@ line line::operator+(line& other)
 	return new_string;
 }
 
-line line::operator+(const char* other)
+__namespace::line __namespace::line::operator+(const char* other)
 {
 	unsigned short other_length = strlen(other);
 	line new_string;
@@ -59,7 +59,7 @@ line line::operator+(const char* other)
 	return new_string;
 }
 
-void line::operator+=(line& other)
+void __namespace::line::operator+=(line& other)
 {
 	unsigned short other_length = strlen(other.__str);
 	unsigned short i = 0;
@@ -73,7 +73,7 @@ void line::operator+=(line& other)
 	}
 }
 
-void line::operator+=(const char* other)
+void __namespace::line::operator+=(const char* other)
 {
 	unsigned short other_length = strlen(other);
 	unsigned short i = 0;
@@ -87,33 +87,32 @@ void line::operator+=(const char* other)
 	}
 }
 
-bool line::operator==(line& other)
+bool __namespace::line::operator==(line& other)
 {
 	return !strcmp(this->__str, other.__str);
 }
 
-bool line::operator==(const char* other)
+bool __namespace::line::operator==(const char* other)
 {
 	return !strcmp(this->__str, other);
 }
 
-bool line::operator!=(line &other)
+bool __namespace::line::operator!=(line &other)
 {
 	return strcmp(this->__str, other.__str);
 }
 
-bool line::operator!=(const char* other)
+bool __namespace::line::operator!=(const char* other)
 {
 	return strcmp(this->__str, other);
 }
 
-char* line::to_upper()
+char* __namespace::line::to_upper()
 {
-	unsigned short length = strlen(this->__str);
-	for (unsigned short i = 0; i < length; i++)
+	for (unsigned short i = 0; i < strlen(this->__str); i++)
 	{
 		if (this->__str[i] > __a &&
-			this->__str[i] < __z)
+		    this->__str[i] < __z)
 		{
 			this->__str[i] -= 32;
 		}
@@ -121,13 +120,12 @@ char* line::to_upper()
 	return this->__str;
 }
 
-char* line::to_lower()
+char* __namespace::line::to_lower()
 {
-	unsigned short length = strlen(this->__str);
-	for (unsigned short i = 0; i < length; i++)
+	for (unsigned short i = 0; i < strlen(this->__str); i++)
 	{
 		if (this->__str[i] > __A &&
-			this->__str[i] < __Z)
+		    this->__str[i] < __Z)
 		{
 			this->__str[i] += 32;
 		}
@@ -135,7 +133,7 @@ char* line::to_lower()
 	return this->__str;
 }
 
-char* line::reverse()
+char* __namespace::line::reverse()
 {
 	unsigned short length = strlen(this->__str);
 	for (unsigned short i = 0; i < length/2; i++)
@@ -147,9 +145,9 @@ char* line::reverse()
 	return this->__str;
 }
 
-char* line::replace(const char* what, const char* with)
+char* __namespace::line::replace(const char* what, const char* with)
 {
-	char *found = strstr(this->__str, what);
+	char* found = strstr(this->__str, what);
 	char buffer[256];
 	while (found && (found = strstr(this->__str, what)))
 	{
@@ -171,10 +169,11 @@ char* line::replace(const char* what, const char* with)
 			strcpy(this->__str, buffer);
 		}
 	}
+	delete[] found;
 	return this->__str;
 }
 
-char* line::replace(std::regex regex, const char *with)
+char* __namespace::line::replace(std::regex regex, const char* with)
 {
 	std::string matched = std::regex_replace(this->__str, regex, with);
 	char* result = new char[matched.length() + 1];
@@ -182,9 +181,9 @@ char* line::replace(std::regex regex, const char *with)
 	return result;
 }
 
-char* line::cut(const char* what)
+char* __namespace::line::cut(const char* what)
 {
-	char *found = strstr(this->__str, what);
+	char* found = strstr(this->__str, what);
 	char buffer[255];
 	while (found && (found = strstr(this->__str, what)))
 	{
@@ -196,10 +195,11 @@ char* line::cut(const char* what)
 			strcpy(this->__str, buffer);
 		}
 	}
+	delete[] found;
 	return this->__str;
 }
 
-unsigned short line::length()
+unsigned short __namespace::line::length()
 {
 	unsigned short length = 0;
 	while (this->__str[length] != '\0')
@@ -209,12 +209,20 @@ unsigned short line::length()
 	return length;
 }
 
-const char *line::clear()
+const char* __namespace::line::clear()
 {
 	return "";
 }
 
-line::~line()
+void __namespace::swap(line& what, line& with)
 {
+	line tmp = with;
+	with = what;
+	what = tmp;
+}
 
+__namespace::line::~line()
+{
+	if (!this->__str)
+		delete[] this->__str;
 }
