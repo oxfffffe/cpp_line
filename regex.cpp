@@ -49,7 +49,7 @@ bool lightning::regex::matchGroup(int ch, int group)
 	{
 		return ch == group;
 	}
-	switch (group & 0xff) /* get "mask" if group < 255 */
+	switch (group & 0xff) /* get "mask" if group > 255 */
 	{
 		case '.': return  true;
 		case 'd': return  isdigit(ch);
