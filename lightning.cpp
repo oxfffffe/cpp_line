@@ -18,7 +18,7 @@ void lightning::swap(line& what, line& with)
 bool lightning::strcmp(char* what, const char* with)
 {
 	if (strlen(what) ==
-		strlen(with))
+	    strlen(with))
 	{
 		int index = 0;
 		int c1 = what[index++];
