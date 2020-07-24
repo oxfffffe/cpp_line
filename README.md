@@ -1,6 +1,4 @@
-# lightning
-
-## Begin of C++ universal library
+# lightning - Begin of C++ universal library
 
 ### Realized:
 
