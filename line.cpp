@@ -3,13 +3,13 @@
 
 lightning::line::line(const char* string)
 {
-	unsigned short length = strlen(string);
-	this->__str = new char[length + 1];
-	for (unsigned short i = 0; i < length; i++)
+	this->__str = new char[lightning::strlen(string) + 1];
+	s16 i = 0;
+	do
 	{
 		this->__str[i] = string[i];
 	}
-	this->__str[length] = '\0';
+	while (string[i++] != '\0');
 }
 
 std::ostream& lightning::operator<<(std::ostream& out, const line& string)
@@ -23,124 +23,104 @@ std::istream& lightning::operator>>(std::istream& in , line& string)
 	return in.getline(string.__str, 256);
 }
 
-lightning::line lightning::line::operator+(line& other)
+char* lightning::line::operator+(line& other)
 {
-	unsigned short other_length = strlen(other.__str);
-	line new_string;
-	new_string.__str = new char[strlen(this->__str) + other_length + 1];
-
-	unsigned short i = 0;
-	for ( ; i < strlen(this->__str); i++)
-	{
-		new_string.__str[i] = this->__str[i];
-	}
-	for (unsigned short j = 0; j < other_length; j++)
-	{
-		new_string.__str[i + j] = other.__str[j];
-	}
-	return new_string;
+	return strcat(this->__str, other.__str);
 }
 
-lightning::line lightning::line::operator+(const char* other)
+char* lightning::line::operator+(const char* other)
 {
-	unsigned short other_length = strlen(other);
-	line new_string;
-	new_string.__str = new char[strlen(this->__str) + other_length + 1];
+	return strcat(this->__str, other);
+}
 
-	unsigned short i = 0;
-	for ( ; i < strlen(this->__str); i++)
-	{
-		new_string.__str[i] = this->__str[i];
-	}
-	for (unsigned short j = 0; j < other_length; j++)
-	{
-		new_string.__str[i + j] = other[j];
-	}
-	return new_string;
+bool lightning::line::operator==(line& other)
+{
+	return lightning::strcmp(this->__str, other.__str);
+}
+
+bool lightning::line::operator==(const char* other)
+{
+	return lightning::strcmp(this->__str, other);
+}
+
+bool lightning::line::operator!=(line &other)
+{
+	return !lightning::strcmp(this->__str, other.__str);
+}
+
+bool lightning::line::operator!=(const char* other)
+{
+	return !lightning::strcmp(this->__str, other);
 }
 
 void lightning::line::operator+=(line& other)
 {
-	unsigned short other_length = strlen(other.__str);
-	unsigned short i = 0;
-	for ( ; i < strlen(this->__str); i++)
+	s16 index = 0;
+	s16 other_index = 0;
+	while (index < lightning::strlen(this->__str))
 	{
-		this->__str[i] = this->__str[i];
+		++index;
 	}
-	for (unsigned short j = 0; j < other_length; j++)
+	while (other_index < lightning::strlen(other.__str))
 	{
-		this->__str[i + j] = other.__str[j];
+		this->__str[index+other_index] = other.__str[other_index];
+		++other_index;
 	}
 }
 
 void lightning::line::operator+=(const char* other)
 {
-	unsigned short other_length = strlen(other);
-	unsigned short i = 0;
-	for ( ; i < strlen(this->__str); i++)
+	s16 index = 0;
+	s16 other_index = 0;
+	while (index < lightning::strlen(this->__str))
 	{
-		this->__str[i] = this->__str[i];
+		++index;
 	}
-	for (unsigned short j = 0; j < other_length; j++)
+	while (other_index < lightning::strlen(other))
 	{
-		this->__str[i + j] = other[j];
+		this->__str[index+other_index] = other[other_index];
+		++other_index;
 	}
-}
-
-bool lightning::line::operator==(line& other)
-{
-	return !strcmp(this->__str, other.__str);
-}
-
-bool lightning::line::operator==(const char* other)
-{
-	return !strcmp(this->__str, other);
-}
-
-bool lightning::line::operator!=(line &other)
-{
-	return strcmp(this->__str, other.__str);
-}
-
-bool lightning::line::operator!=(const char* other)
-{
-	return strcmp(this->__str, other);
 }
 
 char* lightning::line::to_upper()
 {
-	for (unsigned short i = 0; i < strlen(this->__str); i++)
+	s16 i = 0;
+	do
 	{
-		if (this->__str[i] > __a &&
+		if (this->__str[i] > __a and
 		    this->__str[i] < __z)
 		{
-		    this->__str[i] -= 32;
+		    this->__str[i] -= 0x20;
 		}
-	}
+	} while(this->__str[i++] != '\0');
 	return this->__str;
 }
 
 char* lightning::line::to_lower()
 {
-	for (unsigned short i = 0; i < strlen(this->__str); i++)
+	s16 i = 0;
+	do
 	{
-		if (this->__str[i] > __A &&
+		if (this->__str[i] > __A and
 		    this->__str[i] < __Z)
 		{
-		    this->__str[i] += 32;
+		    this->__str[i] += 0x20;
 		}
-	}
+	} while(this->__str[i++] != '\0');
 	return this->__str;
 }
 
 char* lightning::line::reverse()
 {
-	unsigned short length = strlen(this->__str);
-	for (unsigned short i = 0; i < length/2; i++)
+	s16 index = 0;
+	int l = lightning::strlen(this->__str);
+	while (index < (l >> 0x1)) // optimization...
 	{
-		char tmp = this->__str[i];
-		this->__str[i] = this->__str[length-i-1];
-		this->__str[length-i-1] = tmp;
+		char tmp = this->__str[index];
+		this->__str[index] = this->__str[l-index-1];
+		this->__str[l-index-1] = tmp;
+		++index;
 	}
 	return this->__str;
 }
@@ -149,35 +129,28 @@ char* lightning::line::replace(const char* what, const char* with)
 {
 	char* found = strstr(this->__str, what);
 	char buffer[256];
-	while (found && (found = strstr(this->__str, what)))
+	while (found and (found = strstr(this->__str, what)))
 	{
 		if (found)
 		{
-			memset(buffer, '\0', strlen(buffer));
+			memset(buffer, 1, lightning::strlen(buffer));
 			if (this->__str == found)
 			{
 				strcpy(buffer, with);
-				strcat(buffer, found + strlen(what));
+				strcat(buffer, found + lightning::strlen(what));
 			}
 			else
 			{
-				strncpy(buffer, this->__str, strlen(this->__str) - strlen(found));
+				strncpy(buffer, this->__str, lightning::strlen(this->__str) - lightning::strlen(found));
 				strcat(buffer, with);
-				strcat(buffer, found + strlen(what));
+				strcat(buffer, found + lightning::strlen(what));
 			}
-			memset(this->__str, '\0', strlen(this->__str));
+			memset(this->__str, 1, lightning::strlen(this->__str));
 			strcpy(this->__str, buffer);
 		}
 	}
 	delete[] found;
 	return this->__str;
-}
-
-char* lightning::line::replace(std::regex regex, const char* with)
-{
-	std::string matched = std::regex_replace(this->__str, regex, with);
-	char* result = new char[matched.length() + 1];
-	return strcpy(result, matched.c_str());
 }
 
 char* lightning::line::cut(const char* what)
@@ -188,7 +161,7 @@ char* lightning::line::cut(const char* what)
 	{
 		if (found)
 		{
-			memset(buffer, '\0', strlen(buffer));
+			memset(buffer, 1, strlen(buffer));
 			strncpy(buffer, this->__str, strlen(this->__str) - strlen(found));
 			strcat(buffer, found + strlen(what));
 			strcpy(this->__str, buffer);
@@ -198,14 +171,9 @@ char* lightning::line::cut(const char* what)
 	return this->__str;
 }
 
-unsigned short lightning::line::length()
+s16 lightning::line::length()
 {
-	unsigned short length = 0;
-	while (this->__str[length] != '\0')
-	{
-		++length;
-	}
-	return length;
+	return lightning::strlen(this->__str);
 }
 
 const char* lightning::line::clear()
@@ -213,15 +181,8 @@ const char* lightning::line::clear()
 	return "";
 }
 
-void lightning::swap(line& what, line& with)
-{
-	line tmp = with;
-	with = what;
-	what = tmp;
-}
-
 lightning::line::~line()
 {
-	if (this->__str == NULL)
+	if (not this->__str)
 		delete[] this->__str;
 }
