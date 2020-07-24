@@ -2,7 +2,7 @@
 
 ## Begin of C++ universal library
 
-# Realized:
+### Realized:
 
 `line` class, that represents an advanced string
 
