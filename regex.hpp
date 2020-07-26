@@ -5,8 +5,8 @@
 class lightning::regex
 {
 public:
-	static bool match(const char* regex, line& string);
+	static bool match_exists(const char* regex, line string);
 private:
-	static inline bool matchGroup(int ch, int group);
-	static inline bool matchQuantity(const char* regex, char* string, int quant, int ch, int* len);
+	static inline bool match_group(int ch, int group);
+	static inline bool match_quantity(const char* regex, char* string, int quant, int ch, int* len);
 };

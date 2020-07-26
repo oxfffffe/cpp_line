@@ -1,6 +1,6 @@
 #include "regex.hpp"
 
-bool lightning::regex::match(const char* regex, line& string)
+bool lightning::regex::match_exists(const char* regex, line string)
 {
 	unsigned int ch = regex[0];
 	if (regex[0] == '\0')
@@ -18,7 +18,7 @@ bool lightning::regex::match(const char* regex, line& string)
 		    ch != '*'  &&
 		    ch != '?')
 		{
-			ch |= 0x100;
+		    ch |= 0x100;
 		}
 		regex++;
 	}
@@ -29,27 +29,27 @@ bool lightning::regex::match(const char* regex, line& string)
 	    q == '?')
 	{
 		int len = strlen(string.__str);
-		return matchQuantity(regex+2, string.__str, q, ch, &len);
+		return match_quantity(regex+2, string.__str, q, ch, &len);
 	}
-	else if (matchGroup(*string.__str, ch))
+	else if (match_group(*string.__str, ch))
 	{
 		++string.__str;
-		return match(++regex, string);
+		return match_exists(++regex, string);
 	}
 	return 0;
 }
 
-bool lightning::regex::matchGroup(int ch, int group)
+bool lightning::regex::match_group(int ch, int group)
 {
-	if ((group & 0xff) == '.')
+	if ((group & 0xFF) == '.')
 	{
-		group ^= 0x100;
+		group ^= 0x100; /* get "mask" */
 	}
 	if (group < 0x100)
 	{
 		return ch == group;
 	}
-	switch (group & 0xff) /* get "mask" if group > 255 */
+	switch (group & 0xFF)
 	{
 		case '.': return  true;
 		case 'd': return  isdigit(ch);
@@ -57,32 +57,32 @@ bool lightning::regex::matchGroup(int ch, int group)
 		case 's': return  isspace(ch);
 		case 'S': return !isspace(ch);
 		case 'w': return (isalpha(ch) ||
-				  isdigit(ch));
+		                  isdigit(ch));
 		case 'W': return!(isalpha(ch) ||
-				  isdigit(ch));
+		                  isdigit(ch));
 	}
 	return 0;
 }
 
-bool lightning::regex::matchQuantity(const char* regex, char* string, int quant, int ch, int* len)
+bool lightning::regex::match_quantity(const char* regex, char* string, int quant, int ch, int* len)
 {
 	if (quant == '?')
 	{
-		if (matchGroup(*string, ch))
+		if (match_group(*string, ch))
 		{
 			++string;
 			++len;
 		}
 		line __line;
 		__line.__str = string;
-		return match(regex, __line);
+		return match_exists(regex, __line);
 	}
 
 	if (quant == '+' ||
 	    quant == '*')
 	{
 		char *p = string;
-		for ( ; *p != '\0' && matchGroup(*p, ch); ++p)
+		for ( ; *p != '\0' && match_group(*p, ch); ++p)
 			++len;
 
 		if (quant == '+' && p == string) return 0;
@@ -91,7 +91,7 @@ bool lightning::regex::matchQuantity(const char* regex, char* string, int quant,
 			{
 				line __line;
 				__line.__str = p;
-				if (regex::match(regex, __line))
+				if (regex::match_exists(regex, __line))
 				{
 					return 1;
 				}
