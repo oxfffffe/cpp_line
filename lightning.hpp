@@ -2,9 +2,10 @@
 
 namespace lightning
 {
-	class line;
-	class regex;
-	void  swap(line&, line&);
+	class Line;
+	class Regex;
+	class Allocator;
+	void  swap(Line&, Line&);
 #ifndef  _STRING_H
 	int   strlen(const char*);
 	bool  strcmp(char*, const char*);

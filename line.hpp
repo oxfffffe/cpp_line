@@ -1,24 +1,27 @@
 #pragma once
 
-#include <iostream>
+//#include <string.h>
+#include <ostream>
+#include <istream>
 #include "lightning.hpp"
 #include "defines.hpp"
+//#include "allocator.hpp"
 
-class lightning::line
+class lightning::Line
 {
 public:
-	line(){};
-	line(const char*);
-	~line();
-	friend std::ostream& operator<<(std::ostream&, const line&);
-	friend std::istream& operator>>(std::istream&, line&);
-	char* operator+(line&);
+	Line(){};
+	Line(const char*);
+	~Line();
+	friend std::ostream& operator<<(std::ostream&, const Line&);
+	friend std::istream& operator>>(std::istream&, Line&);
+	char* operator+(Line&);
 	char* operator+(const char*);
-	bool  operator==(line&);
+	bool  operator==(Line&);
 	bool  operator==(const char*);
-	bool  operator!=(line&);
+	bool  operator!=(Line&);
 	bool  operator!=(const char*);
-	void  operator+=(line&);
+	void  operator+=(Line&);
 	void  operator+=(const char*);
 	char* to_upper();
 	char* to_lower();
@@ -27,7 +30,7 @@ public:
 	char* cut(const char*);
 	s16 length();
 	const char* clear();
-	friend class lightning::regex;
+	friend class lightning::Regex;
 private:
 	char* __str;
 };

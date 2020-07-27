@@ -1,6 +1,6 @@
 #include "regex.hpp"
 
-bool lightning::regex::match_exists(const char* regex, line string)
+bool lightning::Regex::match_exists(const char* regex, Line string)
 {
 	unsigned int ch = regex[0];
 	if (regex[0] == '\0')
@@ -18,7 +18,7 @@ bool lightning::regex::match_exists(const char* regex, line string)
 		    ch != '*'  &&
 		    ch != '?')
 		{
-		    ch |= 0x100;
+			ch |= 0x100;
 		}
 		regex++;
 	}
@@ -39,11 +39,11 @@ bool lightning::regex::match_exists(const char* regex, line string)
 	return 0;
 }
 
-bool lightning::regex::match_group(int ch, int group)
+bool lightning::Regex::match_group(int ch, int group)
 {
 	if ((group & 0xFF) == '.')
 	{
-		group ^= 0x100; /* get "mask" */
+		group ^= 0x100;
 	}
 	if (group < 0x100)
 	{
@@ -57,14 +57,14 @@ bool lightning::regex::match_group(int ch, int group)
 		case 's': return  isspace(ch);
 		case 'S': return !isspace(ch);
 		case 'w': return (isalpha(ch) ||
-		                  isdigit(ch));
+						  isdigit(ch));
 		case 'W': return!(isalpha(ch) ||
-		                  isdigit(ch));
+						  isdigit(ch));
 	}
 	return 0;
 }
 
-bool lightning::regex::match_quantity(const char* regex, char* string, int quant, int ch, int* len)
+bool lightning::Regex::match_quantity(const char* regex, char* string, int quant, int ch, int* len)
 {
 	if (quant == '?')
 	{
@@ -73,7 +73,7 @@ bool lightning::regex::match_quantity(const char* regex, char* string, int quant
 			++string;
 			++len;
 		}
-		line __line;
+		Line __line;
 		__line.__str = string;
 		return match_exists(regex, __line);
 	}
@@ -89,9 +89,9 @@ bool lightning::regex::match_quantity(const char* regex, char* string, int quant
 		{
 			do
 			{
-				line __line;
+				Line __line;
 				__line.__str = p;
-				if (regex::match_exists(regex, __line))
+				if (Regex::match_exists(regex, __line))
 				{
 					return 1;
 				}

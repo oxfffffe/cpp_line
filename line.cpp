@@ -1,11 +1,11 @@
 #include "line.hpp"
-#include "defines.hpp"
+#include "allocator.hpp"
 
 using namespace lightning;
 
-line::line(const char* string)
+Line::Line(const char* string)
 {
-	this->__str = new char[strlen(string) + 1];
+	this->__str = Allocator::allocate<char>();
 	s16 i = 0;
 	do
 	{
@@ -14,102 +14,98 @@ line::line(const char* string)
 	while (string[i++] != '\0');
 }
 
-std::ostream& lightning::operator<<(std::ostream& out, const line& string)
+std::ostream& lightning::operator<<(std::ostream& out, const Line& string)
 {
 	return out << string.__str;
 }
 
-std::istream& lightning::operator>>(std::istream& in , line& string)
+std::istream& lightning::operator>>(std::istream& in , Line& string)
 {
 	string = "";
 	return in.getline(string.__str, 256);
 }
 
-char* line::operator+(line& other)
+char* Line::operator+(Line& other)
 {
-	s16 l = strlen(this->__str);
-	char* str = new char(l);
+	char* str = Allocator::allocate<char>();
 	strcpy(str, this->__str);
 	return strcat(str, other.__str);
 }
 
-char* line::operator+(const char* other)
+char* Line::operator+(const char* other)
 {
-	s16 l = strlen(this->__str);
-	char* str = new char(l);
+	char* str = Allocator::allocate<char>();
 	strcpy(str, this->__str);
 	return strcat(str, other);
 }
 
-bool line::operator==(line& other)
+bool Line::operator==(Line& other)
 {
 	return strcmp(this->__str, other.__str);
 }
 
-bool line::operator==(const char* other)
+bool Line::operator==(const char* other)
 {
 	return strcmp(this->__str, other);
 }
 
-bool line::operator!=(line &other)
+bool Line::operator!=(Line &other)
 {
 	return !strcmp(this->__str, other.__str);
 }
 
-bool line::operator!=(const char* other)
+bool Line::operator!=(const char* other)
 {
 	return !strcmp(this->__str, other);
 }
 
-void line::operator+=(line& other)
+void Line::operator+=(Line& other)
 {
 	strcat(this->__str, other.__str);
 }
 
-void line::operator+=(const char* other)
+void Line::operator+=(const char* other)
 {
 	strcat(this->__str, other);
 }
 
-char* line::to_upper()
+char* Line::to_upper()
 {
 	s16 i = 0;
-	s16 l = strlen(this->__str);
-	char* str = new char(l);
+	char* str = Allocator::allocate<char>();
 	strcpy(str, this->__str);
 	do
 	{
 		if (str[i] > __a and
-		    str[i] < __z)
+			str[i] < __z)
 		{
-		    str[i] -= 0x20;
+			str[i] -= 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
 }
 
-char* line::to_lower()
+char* Line::to_lower()
 {
 	s16 i = 0;
-	s16 l = strlen(this->__str);
-	char* str = new char(l);
+	char* str = Allocator::allocate<char>();
 	strcpy(str, this->__str);
 	do
 	{
 		if (str[i] > __A and
-		    str[i] < __Z)
+			str[i] < __Z)
 		{
-		    str[i] += 0x20;
+			str[i] += 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
 }
 
-char* line::reverse()
+char* Line::reverse()
 {
 	s16 i = 0;
 	s16 l = strlen(this->__str);
-	char* str = new char(l);
+	char* str = Allocator::allocate<char>();
 	strcpy(str, this->__str);
 	while (i < l/2)
 	{
@@ -121,13 +117,12 @@ char* line::reverse()
 	return str;
 }
 
-char* line::replace(const char* __restrict__ what, const char* __restrict__ with)
+char* Line::replace(const char* __restrict__ what, const char* __restrict__ with)
 {
-	s16 l = strlen(this->__str);
-	char* str = new char(l);
+	char* str = Allocator::allocate<char>();
 	strcpy(str, this->__str);
 	char* found = strstr(str, what);
-	char buffer[256];
+	char buffer[128];
 	while (found and (found = strstr(str, what)))
 	{
 		if (found)
@@ -152,10 +147,9 @@ char* line::replace(const char* __restrict__ what, const char* __restrict__ with
 	return str;
 }
 
-char* line::cut(const char* what)
+char* Line::cut(const char* what)
 {
-	s16 l = strlen(this->__str);
-	char* str = new char(l);
+	char* str = Allocator::allocate<char>();
 	strcpy(str, this->__str);
 	char* found = strstr(str, what);
 	char buffer[128];
@@ -173,17 +167,17 @@ char* line::cut(const char* what)
 	return str;
 }
 
-s16 line::length()
+s16 Line::length()
 {
 	return strlen(this->__str);
 }
 
-const char* line::clear()
+const char* Line::clear()
 {
 	return "";
 }
 
-line::~line()
+Line::~Line()
 {
 	if (not this->__str)
 		delete[] this->__str;

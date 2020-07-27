@@ -1,9 +1,9 @@
 #include "lightning.hpp"
 #include "line.hpp"
 
-void lightning::swap(line& what, line& with)
+void lightning::swap(Line& what, Line& with)
 {
-	line tmp = with;
+	Line tmp = with;
 	with = what;
 	what = tmp;
 }
