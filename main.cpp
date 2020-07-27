@@ -18,7 +18,7 @@ int main(void)
 	std::cout << "reverse first string: \t\t\t" << a.reverse() << std::endl;
 	std::cout << "clear first string: \t" << a.clear()	<< std::endl;
 	std::cout << "cut \" \" from first string: \t\t" << a.cut(" ") << std::endl;			// [!!!] UNDEFINED BEHAVIOR
-	std::cout << "replace \"[\" with \"{\": \t\t\t" << a.replace("[", "{") << std::endl;	// [!!!] UNDEFINED BEHAVIOR
+	std::cout << "replace \"[\" with \"{\": \t\t\t" << a.replace("[", "{") << std::endl;		// [!!!] UNDEFINED BEHAVIOR
 	std::cout << "convert first string to uppercase: \t" << a.to_upper() << std::endl;
 	std::cout << "convert first string to lowercase: \t" << a.to_lower() << std::endl;
 	std::cout << "concatenate first string with \"[0-9]+\":\t" << a + " [0-9]+" << std::endl;
