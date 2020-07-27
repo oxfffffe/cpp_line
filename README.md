@@ -2,6 +2,8 @@
 
 ### Realized:
 
-`line` class, that represents an advanced string
+`Line` class, that represents an advanced string
 
-`regex` class - simple and fast regual expression parser
+`Regex` class - simple and fast regual expression parser
+
+`Allocator` class - alternative of default C++ new/delete
