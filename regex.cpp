@@ -18,7 +18,7 @@ bool lightning::Regex::match_exists(const char* regex, Line string)
 		    ch != '*'  &&
 		    ch != '?')
 		{
-			ch |= 0x100;
+		    ch |= 0x100;
 		}
 		regex++;
 	}
@@ -57,9 +57,9 @@ bool lightning::Regex::match_group(int ch, int group)
 		case 's': return  isspace(ch);
 		case 'S': return !isspace(ch);
 		case 'w': return (isalpha(ch) ||
-						  isdigit(ch));
+				  isdigit(ch));
 		case 'W': return!(isalpha(ch) ||
-						  isdigit(ch));
+				  isdigit(ch));
 	}
 	return 0;
 }
