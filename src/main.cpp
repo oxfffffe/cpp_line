@@ -9,7 +9,7 @@ using lightning::Allocator;
 int main(void)
 {
 #ifdef	__START_TIME
-		__START_TIME
+	__START_TIME
 #endif
 #ifdef	__DEBUG_LINE
 	std::ios::sync_with_stdio(false);
@@ -35,6 +35,6 @@ int main(void)
 	std::cout << regex::regex_find(pattern, "\\S+\\s\\S+\\s\\S+") << std::endl;
 #endif//__DEBUG_REGEX
 #ifdef	__FINISHED_AT
-		__FINISHED_AT
+	__FINISHED_AT
 #endif
 }
