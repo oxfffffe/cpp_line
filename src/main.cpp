@@ -9,11 +9,11 @@ using lightning::Allocator;
 int main(void)
 {
 #ifdef	__START_TIME
-	__START_TIME
+		__START_TIME
 #endif
 #ifdef	__DEBUG_LINE
-	std::ios::sync_with_stdio(false);
-// 	Line a = "lightning::Line";
+//	std::ios::sync_with_stdio(false);
+	Line a = "lightning::Line";
 	std::cout << "first string: \t\t\t\t" << a << std::endl;
 	std::cout << "length of first string: \t\t" << a.length() << std::endl;
 	std::cout << "reverse first string: \t\t\t" << a.reverse() << std::endl;
@@ -35,6 +35,6 @@ int main(void)
 	std::cout << regex::regex_find(pattern, "\\S+\\s\\S+\\s\\S+") << std::endl;
 #endif//__DEBUG_REGEX
 #ifdef	__FINISHED_AT
-	__FINISHED_AT
+		__FINISHED_AT
 #endif
 }

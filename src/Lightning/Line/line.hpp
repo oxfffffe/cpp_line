@@ -16,41 +16,39 @@ public:
 
 	~Line();
 
+/* overloading default output stream */
 	friend std::ostream&
 	operator<<(std::ostream&, const Line&);
 
+/* overloading default input stream */
 	friend std::istream&
 	operator>>(std::istream&, Line&);
 
-/* concatenate this->__str with Line&.__str and return result */
+/* concatenate this->str with Line&.str and return result */
 	char*
 	operator+(const Line&);
 
-/* concatenate this->__str with char array and return result */
+/* concatenate this->str with char array and return result */
 	char*
 	operator+(const char*);
 
-/* compare if this->__str == Line&.__str */
 	bool
 	operator==(const Line&);
 
-/* compare if this->__str == char* */
 	bool
 	operator==(const char*);
 
-/* compare if this->__str != Line&.__str */
 	bool
 	operator!=(const Line&);
 
-/* compare if this->__str != char* */
 	bool
 	operator!=(const char*);
 
-/* concatenate this->__str with Line&.__str and return result */
+/* concatenate this->str with Line&.str and return result */
 	void
 	operator+=(const Line&);
 
-/* concatenate this->__str with char* and return result */
+/* concatenate this->str with char* and return result */
 	void
 	operator+=(const char*);
 
@@ -67,13 +65,12 @@ public:
 
 	char* cut(const char*);
 
-/* return length of this->__str */
 	s16 length();
 
 /* return empty string */
 	const char* clear();
 
 private:
-	char* __str;
+	char* str;
 };
 

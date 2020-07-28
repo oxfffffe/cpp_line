@@ -6,27 +6,27 @@ using namespace lightning;
 Line::Line(const char* string)
 {
 #ifdef __ALLOCATOR_H
-	this->__str = Allocator::allocate<char>();
+	this->str = Allocator::allocate<char>();
 #else
-	this->__str = new char (strlen(string));
+	this->str = new char (strlen(string));
 #endif
-	s16 i = 0;
+	s16 i = 0; //unsigned short
 	do
 	{
-		this->__str[i] = string[i];
+		this->str[i] = string[i];
 	}
 	while (string[i++] != '\0');
 }
 
 std::ostream& lightning::operator<<(std::ostream& out, const Line& string)
 {
-	return out << string.__str;
+	return out << string.str;
 }
 
 std::istream& lightning::operator>>(std::istream& in , Line& string)
 {
 	string = "";
-	return in.getline(string.__str, 256);
+	return in.getline(string.str, 256);
 }
 
 char* Line::operator+(const Line& other)
@@ -34,10 +34,10 @@ char* Line::operator+(const Line& other)
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
-	char* str = new char(strlen(this->__str) + strlen(other.__str));
+	char* str = new char(strlen(this->str) + strlen(other.str));
 #endif
-	strcpy(str, this->__str);
-	return strcat(str, other.__str);
+	strcpy(str, this->str);
+	return strcat(str, other.str);
 }
 
 char* Line::operator+(const char* other)
@@ -45,40 +45,40 @@ char* Line::operator+(const char* other)
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
-	char* str = new char(strlen(this->__str) + strlen(other));
+	char* str = new char(strlen(this->str) + strlen(other));
 #endif
-	strcpy(str, this->__str);
+	strcpy(str, this->str);
 	return strcat(str, other);
 }
 
 bool Line::operator==(const Line& other)
 {
-	return !strcmp(this->__str, other.__str);
+	return !strcmp(this->str, other.str);
 }
 
 bool Line::operator==(const char* other)
 {
-	return !strcmp(this->__str, other);
+	return !strcmp(this->str, other);
 }
 
 bool Line::operator!=(const Line &other)
 {
-	return strcmp(this->__str, other.__str);
+	return strcmp(this->str, other.str);
 }
 
 bool Line::operator!=(const char* other)
 {
-	return strcmp(this->__str, other);
+	return strcmp(this->str, other);
 }
 
 void Line::operator+=(const Line& other)
 {
-	strcat(this->__str, other.__str);
+	strcat(this->str, other.str);
 }
 
 void Line::operator+=(const char* other)
 {
-	strcat(this->__str, other);
+	strcat(this->str, other);
 }
 
 char* Line::to_upper()
@@ -87,9 +87,9 @@ char* Line::to_upper()
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
-	char* str = new char(strlen(this->__str));
+	char* str = new char(strlen(this->str));
 #endif
-	strcpy(str, this->__str);
+	strcpy(str, this->str);
 	do
 	{
 		if (str[i] > __a and
@@ -107,9 +107,9 @@ char* Line::to_lower()
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
-	char* str = new char(strlen(this->__str));
+	char* str = new char(strlen(this->str));
 #endif
-	strcpy(str, this->__str);
+	strcpy(str, this->str);
 	do
 	{
 		if (str[i] > __A and
@@ -124,13 +124,13 @@ char* Line::to_lower()
 char* Line::reverse()
 {
 	s16 i = 0;
-	s16 l = strlen(this->__str);
+	s16 l = strlen(this->str);
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
-	char* str = new char(strlen(this->__str));
+	char* str = new char(strlen(this->str));
 #endif
-	strcpy(str, this->__str);
+	strcpy(str, this->str);
 	while (i < l/2)
 	{
 		str[i] ^= str[l-i-1];
@@ -146,9 +146,9 @@ char* Line::replace(const char* __restrict__ what, const char* __restrict__ with
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
-	char* str = new char(strlen(this->__str));
+	char* str = new char(strlen(this->str));
 #endif
-	strcpy(str, this->__str);
+	strcpy(str, this->str);
 	char* found = strstr(str, what);
 	char buffer[128];
 	while (found and (found = strstr(str, what)))
@@ -180,9 +180,9 @@ char* Line::cut(const char* what)
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
-	char* str = new char(strlen(this->__str));
+	char* str = new char(strlen(this->str));
 #endif
-	strcpy(str, this->__str);
+	strcpy(str, this->str);
 	char* found = strstr(str, what);
 	char buffer[128];
 	while (found && (found = strstr(str, what)))
@@ -201,7 +201,7 @@ char* Line::cut(const char* what)
 
 s16 Line::length()
 {
-	return strlen(this->__str);
+	return strlen(this->str);
 }
 
 const char* Line::clear()
@@ -211,7 +211,7 @@ const char* Line::clear()
 
 char* Line::to_char_array()
 {
-	return this->__str;
+	return this->str;
 }
 
 void lightning::swap(Line& what, Line& with)
@@ -223,7 +223,7 @@ void lightning::swap(Line& what, Line& with)
 
 Line::~Line()
 {
-	if (not this->__str)
-		delete[] this->__str;
+	if (not this->str)
+		delete[] this->str;
 }
 
