@@ -13,7 +13,7 @@ int main(void)
 #endif
 #ifdef	__DEBUG_LINE
 	std::ios::sync_with_stdio(false);
-	Line a = "lightning::Line";
+// 	Line a = "lightning::Line";
 	std::cout << "first string: \t\t\t\t" << a << std::endl;
 	std::cout << "length of first string: \t\t" << a.length() << std::endl;
 	std::cout << "reverse first string: \t\t\t" << a.reverse() << std::endl;
