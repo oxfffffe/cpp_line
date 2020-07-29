@@ -22,21 +22,21 @@ bool lightning::Regex::match_exists(const char* regex, char* string)
 	{
 		ch = regex[1];
 		if (ch != '\\' &&
-			ch != '^'  &&
-			ch != '$'  &&
-			ch != '+'  &&
-			ch != '*'  &&
-			ch != '?')
+		    ch != '^'  &&
+		    ch != '$'  &&
+		    ch != '+'  &&
+		    ch != '*'  &&
+		    ch != '?')
 		{
-			ch |= 0x100;
+		    ch |= 0x100;
 		}
 		regex++;
 	}
 	int q = regex[1];
 	if (q == '*' ||
-		q == '+' ||
-		q == '-' ||
-		q == '?')
+	    q == '+' ||
+	    q == '-' ||
+	    q == '?')
 	{
 		int len = strlen(string);
 		return match_quantity(regex+2, string, q, ch, &len);
@@ -67,9 +67,9 @@ bool lightning::Regex::match_group(int ch, int group)
 		case 's': return  isspace(ch);
 		case 'S': return !isspace(ch);
 		case 'w': return (isalpha(ch) ||
-						  isdigit(ch));
+		                  isdigit(ch));
 		case 'W': return!(isalpha(ch) ||
-						  isdigit(ch));
+		                  isdigit(ch));
 	}
 	return 0;
 }
@@ -95,8 +95,11 @@ bool lightning::Regex::match_quantity(const char* regex, char* string, int quant
 			++len;
 		}
 
-		if (quant == '+' && p == string) return 0;
+		if (quant == '+' &&
+			p     == string)
 		{
+			return 0;
+		}
 			do
 			{
 				if (Regex::match_exists(regex, p))
@@ -104,7 +107,7 @@ bool lightning::Regex::match_quantity(const char* regex, char* string, int quant
 					return 1;
 				}
 			} while (p-- > string);
-		}
 	}
 	return 0;
 }
+// [!] 113

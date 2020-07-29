@@ -1,6 +1,13 @@
-#include <ctype.h>
+#define __REGEX_H
+#ifdef  __REGEX_H
+
+#include <ctype.h> ///< isdigit, isspace, isalpha
 #include "src/Lightning/namespace/lightning.hpp"
 
+/*!
+ * @brief Regex represents the class
+ * which allows to find match in text
+ */
 class lightning::Regex
 {
 public:
@@ -13,3 +20,4 @@ private:
 
 	static inline bool match_quantity(const char* regex, char* string, int quant, int ch, int* len);
 };
+#endif

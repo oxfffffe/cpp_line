@@ -1,3 +1,9 @@
+/*!
+ * @namespace lightning -
+ * top of the classes and
+ * methods(in future) hierarchy
+ */
+
 namespace lightning
 {
 	class Line;

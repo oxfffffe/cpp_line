@@ -10,118 +10,111 @@ Line::Line(const char* string)
 #else
 	this->str = new char (strlen(string));
 #endif
-	s16 i = 0; //unsigned short
-	do
-	{
-		this->str[i] = string[i];
-	}
-	while (string[i++] != '\0');
+	strcpy(this->str, string);
 }
 
-std::ostream& lightning::operator<<(std::ostream& out, const Line& string)
+std::ostream& lightning::operator<<(std::ostream& out, const Line& string) noexcept
 {
 	return out << string.str;
 }
 
-std::istream& lightning::operator>>(std::istream& in , Line& string)
+std::istream& lightning::operator>>(std::istream& in , Line& string) noexcept
 {
 	string = "";
 	return in.getline(string.str, 256);
 }
 
-char* Line::operator+(const Line& other)
+char* Line::operator+(const Line& other) noexcept
 {
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
 	char* str = new char(strlen(this->str) + strlen(other.str));
 #endif
-	strcpy(str, this->str);
-	return strcat(str, other.str);
+	return strcat(strcpy(str, this->str), other.str);
 }
 
-char* Line::operator+(const char* other)
+char* Line::operator+(const char* other) noexcept
 {
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
 	char* str = new char(strlen(this->str) + strlen(other));
 #endif
-	strcpy(str, this->str);
-	return strcat(str, other);
+	return strcat(strcpy(str, this->str), other);
 }
 
-bool Line::operator==(const Line& other)
+bool Line::operator==(const Line& other) noexcept
 {
 	return !strcmp(this->str, other.str);
 }
 
-bool Line::operator==(const char* other)
+bool Line::operator==(const char* other) noexcept
 {
 	return !strcmp(this->str, other);
 }
 
-bool Line::operator!=(const Line &other)
+bool Line::operator!=(const Line &other) noexcept
 {
 	return strcmp(this->str, other.str);
 }
 
-bool Line::operator!=(const char* other)
+bool Line::operator!=(const char* other) noexcept
 {
 	return strcmp(this->str, other);
 }
 
-void Line::operator+=(const Line& other)
+void Line::operator+=(const Line& other) noexcept
 {
 	strcat(this->str, other.str);
 }
 
-void Line::operator+=(const char* other)
+void Line::operator+=(const char* other) noexcept
 {
 	strcat(this->str, other);
 }
 
-char* Line::to_upper()
+char* Line::to_upper() noexcept
 {
-	s16 i = 0;
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
 	char* str = new char(strlen(this->str));
 #endif
+	s16 i = 0;
 	strcpy(str, this->str);
 	do
 	{
 		if (str[i] > __a and
-			str[i] < __z)
+		    str[i] < __z)
 		{
-			str[i] -= 0x20;
+		    str[i] -= 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
 }
 
-char* Line::to_lower()
+char* Line::to_lower() noexcept
 {
-	s16 i = 0;
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
 #else
 	char* str = new char(strlen(this->str));
 #endif
+	s16 i = 0;
 	strcpy(str, this->str);
 	do
 	{
 		if (str[i] > __A and
-			str[i] < __Z)
+		    str[i] < __Z)
 		{
-			str[i] += 0x20;
+		    str[i] += 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
 }
 
-char* Line::reverse()
+char* Line::reverse() noexcept
 {
 	s16 i = 0;
 	s16 l = strlen(this->str);
@@ -133,6 +126,9 @@ char* Line::reverse()
 	strcpy(str, this->str);
 	while (i < l/2)
 	{
+		/*!
+		 * @brief reverse using XOR
+		 */
 		str[i] ^= str[l-i-1];
 		str[l-i-1] ^= str[i];
 		str[i] ^= str[l-i-1];
@@ -141,7 +137,7 @@ char* Line::reverse()
 	return str;
 }
 
-char* Line::replace(const char* __restrict__ what, const char* __restrict__ with)
+char* Line::replace(const char* __restrict__ what, const char* __restrict__ with) noexcept
 {
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
@@ -175,7 +171,7 @@ char* Line::replace(const char* __restrict__ what, const char* __restrict__ with
 	return str;
 }
 
-char* Line::cut(const char* what)
+char* Line::cut(const char* what) noexcept
 {
 #ifdef __ALLOCATOR_H
 	char* str = Allocator::allocate<char>();
@@ -185,7 +181,7 @@ char* Line::cut(const char* what)
 	strcpy(str, this->str);
 	char* found = strstr(str, what);
 	char buffer[128];
-	while (found && (found = strstr(str, what)))
+	while (found)
 	{
 		if (found)
 		{
@@ -199,17 +195,17 @@ char* Line::cut(const char* what)
 	return str;
 }
 
-s16 Line::length()
+s16 Line::length() noexcept
 {
 	return strlen(this->str);
 }
 
-const char* Line::clear()
+const char* Line::clear() noexcept
 {
 	return "";
 }
 
-char* Line::to_char_array()
+char* Line::to_char_array() noexcept
 {
 	return this->str;
 }
@@ -226,4 +222,3 @@ Line::~Line()
 	if (not this->str)
 		delete[] this->str;
 }
-

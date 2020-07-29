@@ -2,8 +2,12 @@
 #ifdef  __ALLOCATOR_H
 
 #include "src/Lightning/namespace/lightning.hpp"
-#include <bitset>
+//#include <bitset> ///> _GLIBCXX_BITSET
 
+/*!
+ * @brief Class represents memory allocator
+ * without specifying size of the memory space
+ */
 class lightning::Allocator
 {
 public:
@@ -13,30 +17,45 @@ public:
 		int i = 0;
 		do
 		{
-			i = freeblock;
+			i = freeblock; ///< assign freeblock falue to i
+#ifdef _GLIBCXX_BITSET
 			if (!bufmap.test(i))
+			{
 				break;
+			}
+#else
+			if (!(i & 0x100))
+			{
+				break;
+			}
+#endif
 		} while (i++ < 64);
-		freeblock = ++i;
-		return static_cast<T*>
-		(
-			new (&buffer[128*i]) T()
-		);
+		freeblock = ++i; ///< increment freeblock
+		return new (&buffer[128*i]) T();
 	}
 
 	template <typename T>
-	static T* deallocate(T* ptr)
+	static void deallocate(T* ptr)
 	{
 		*ptr = 0;
 	}
 
+/*!
+ * @variable int freeblock
+ * @variable bufmap
+ * @variable char buffer[2048]
+ */
 private:
 	static char buffer[2048];
-	static std::bitset<1024> bufmap;
+#ifdef _GLIBCXX_BITSET
+	static std::bitset<1000> bufmap;
+#endif
 	static int  freeblock;
 };
 
 int lightning::Allocator::freeblock = 0;
-std::bitset<1024> lightning::Allocator::bufmap = std::bitset<1024>();
+#ifdef _GLIBCXX_BITSET
+std::bitset<1000> lightning::Allocator::bufmap = std::bitset<1000>();
+#endif
 char lightning::Allocator::buffer[2048];
 #endif
