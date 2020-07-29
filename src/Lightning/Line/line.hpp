@@ -105,7 +105,7 @@ public:
 	 */
 	char*
 	replace(const char* __restrict__,
-			const char* __restrict__) noexcept;
+	        const char* __restrict__) noexcept;
 
 	char*
 	cut(const char*) noexcept;
