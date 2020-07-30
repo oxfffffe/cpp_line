@@ -24,7 +24,7 @@ public:
 				break;
 			}
 #else
-			if (!(i & 0x100))
+			if (i | (1U << (i - 1))) ///< check if i'th bit is set
 			{
 				break;
 			}
@@ -40,11 +40,6 @@ public:
 		*ptr = 0;
 	}
 
-/*!
- * @variable int freeblock
- * @variable bufmap
- * @variable char buffer[2048]
- */
 private:
 	static char buffer[2048];
 #ifdef _GLIBCXX_BITSET
@@ -58,4 +53,4 @@ int lightning::Allocator::freeblock = 0;
 std::bitset<1000> lightning::Allocator::bufmap = std::bitset<1000>();
 #endif
 char lightning::Allocator::buffer[2048];
-#endif
+#endif //__ALLOCATOR_H

@@ -7,6 +7,7 @@
 namespace lightning
 {
 	class Line;
+	class Hash;
 	class Regex;
 	class Allocator;
 	void  swap(Line&, Line&);

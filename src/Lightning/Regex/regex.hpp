@@ -20,4 +20,4 @@ private:
 
 	static inline bool match_quantity(const char* regex, char* string, int quant, int ch, int* len);
 };
-#endif
+#endif//__REGEX_H

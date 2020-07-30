@@ -1,5 +1,6 @@
 #include "src/Lightning/Line/line.hpp"
 #include "src/Lightning/Allocator/allocator.hpp"
+//#include "src/Lightning/Hash/hash.hpp"
 
 using namespace lightning;
 
@@ -10,7 +11,7 @@ Line::Line(const char* string)
 #else
 	this->str = new char (strlen(string));
 #endif
-	strcpy(this->str, string);
+	memcpy(this->str, string, strlen(string));
 }
 
 std::ostream& lightning::operator<<(std::ostream& out, const Line& string) noexcept
@@ -46,22 +47,38 @@ char* Line::operator+(const char* other) noexcept
 
 bool Line::operator==(const Line& other) noexcept
 {
+#ifdef __HASH_H
+	return Hash::crc32cmp(this->str, other.str);
+#else
 	return !strcmp(this->str, other.str);
+#endif
 }
 
 bool Line::operator==(const char* other) noexcept
 {
+#ifdef __HASH_H
+	return Hash::crc32cmp(this->str, other);
+#else
 	return !strcmp(this->str, other);
+#endif
 }
 
 bool Line::operator!=(const Line &other) noexcept
 {
+#ifdef __HASH_H
+	return !Hash::crc32cmp(this->str, other.str);
+#else
 	return strcmp(this->str, other.str);
+#endif
 }
 
 bool Line::operator!=(const char* other) noexcept
 {
+#ifdef __HASH_H
+	return !Hash::crc32cmp(this->str, other);
+#else
 	return strcmp(this->str, other);
+#endif
 }
 
 void Line::operator+=(const Line& other) noexcept
@@ -86,9 +103,9 @@ char* Line::to_upper() noexcept
 	do
 	{
 		if (str[i] > __a and
-		    str[i] < __z)
+			str[i] < __z)
 		{
-		    str[i] -= 0x20;
+			str[i] -= 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
@@ -106,9 +123,9 @@ char* Line::to_lower() noexcept
 	do
 	{
 		if (str[i] > __A and
-		    str[i] < __Z)
+			str[i] < __Z)
 		{
-		    str[i] += 0x20;
+			str[i] += 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
