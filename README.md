@@ -7,3 +7,5 @@
 `Regex` class - simple and fast regual expression parser
 
 `Allocator` class - alternative of default C++ new/delete
+
+`Hash` chass - crc8 and crc32 algorithms
