@@ -103,9 +103,9 @@ char* Line::to_upper() noexcept
 	do
 	{
 		if (str[i] > __a and
-			str[i] < __z)
+		    str[i] < __z)
 		{
-			str[i] -= 0x20;
+		    str[i] -= 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
@@ -123,9 +123,9 @@ char* Line::to_lower() noexcept
 	do
 	{
 		if (str[i] > __A and
-			str[i] < __Z)
+		    str[i] < __Z)
 		{
-			str[i] += 0x20;
+		    str[i] += 0x20;
 		}
 	} while(str[i++] != '\0');
 	return str;
