@@ -8,4 +8,6 @@
 
 `Allocator` class - alternative of default C++ new/delete
 
-`Hash` chass - crc8 and crc32 algorithms
+`CRC8`, `CRC16`, `CRC32` classes - fast string comparison algorithms
+
+`SHA256` class - SHA-256 cryptographic hash function implementation
