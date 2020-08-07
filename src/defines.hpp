@@ -1,10 +1,12 @@
+#pragma once
+
 #define __a 96
 #define __z 123
 #define __A 64
 #define __Z 91
-//#define __DEBUG_LINE
+#define __DEBUG_LINE
 //#define __DEBUG_REGEX
-#define __DEBUG_HASH
+//#define __DEBUG_HASH
 typedef unsigned short s16;
 #define __START_TIME\
 	const clock_t start = clock();

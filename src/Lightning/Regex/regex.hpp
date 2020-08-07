@@ -8,8 +8,7 @@
  * @brief Regex represents the class
  * which allows to find match in text
  */
-class lightning::Regex
-{
+class lightning::Regex {
 public:
 	static bool match_exists(const char* regex, char* string);
 

@@ -1,6 +1,8 @@
-#include "hash.hpp"
-const long lightning::Hash::crc32_lookup_table[256] =
-{
+#include "crc32.hpp"
+
+using lightning::CRC32;
+
+const unsigned long CRC32::crc32_lookup_table[256] = {
 	0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA,
 	0x076DC419, 0x706AF48F, 0xE963A535, 0x9E6495A3,
 	0x0EDB8832, 0x79DCB8A4, 0xE0D5E91E, 0x97D2D988,
@@ -67,22 +69,18 @@ const long lightning::Hash::crc32_lookup_table[256] =
 	0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D
 };
 
-long lightning::Hash::crc32gen(const char *buffer)
-{
+unsigned long CRC32::crc32gen(const char* buffer) {
 	int length = 0;
-	do
-	{
+	do {
 		++length;
 	} while (buffer[length] != '\0');
 	long crc32 = 0xFFFFFFFF;
-	while (length--)
-	{
-		crc32 = (crc32 >> 8) ^ crc32_lookup_table[(crc32 ^ *buffer++) & 0xFF];
+	while (length--) {
+		crc32 = (crc32 >> 8) ^crc32_lookup_table[(crc32 ^ *buffer++) & 0xFF];
 	}
 	return crc32 ^ 0xFFFFFFFF;
 }
 
-bool lightning::Hash::crc32cmp(const char* what, const char* with)
-{
+bool CRC32::crc32cmp(const char* what, const char* with) {
 	return (crc32gen(what) == crc32gen(with));
 }

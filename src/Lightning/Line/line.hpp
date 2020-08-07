@@ -1,17 +1,18 @@
 #pragma once
 
+typedef unsigned short s16;
+
 #include <ostream>
 #include <istream>
 #include <string.h> ///< strcat, strcmp, ...
-#include "src/defines.hpp" ///< unsigned short -> s16
+//#include "src/defines.hpp" ///< unsigned short -> s16
 #include "src/Lightning/namespace/lightning.hpp"
 
 /*!
  * @brief Line represents class to work
  * with text strings.
  */
-class lightning::Line
-{
+class lightning::Line {
 public:
 	Line(){};
 
@@ -21,6 +22,12 @@ public:
 	 */
 	Line
 	(const char*);
+
+	Line
+	(const Line&&);
+
+	Line
+	(const Line&);
 
 	~Line();
 
@@ -78,6 +85,10 @@ public:
 	void
 	operator+=(const char*) noexcept;
 
+	void operator=(Line&);
+
+	void operator=(const char*);
+
 	char*
 	to_upper() noexcept;
 
@@ -97,18 +108,18 @@ public:
 	char*
 	to_char_array() noexcept;
 
-	/*!
-	 * @brief replace method cannot get
-	 * FIRST @param == SECOND @param
-	 * to avoid waste of resources by replacing
-	 * text with itself.
-	 */
-	char*
-	replace(const char* __restrict__,
-			const char* __restrict__) noexcept;
+//	/*!
+//	 * @brief replace method cannot get
+//	 * FIRST @param == SECOND @param
+//	 * to avoid waste of resources by replacing
+//	 * text with itself.
+//	 */
+//	char*
+//	replace(const char* __restrict__,
+//			const char* __restrict__) noexcept;
 
-	char*
-	cut(const char*) noexcept;
+//	char*
+//	cut(const char*) noexcept;
 
 	s16
 	length() noexcept;

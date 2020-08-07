@@ -1,6 +1,8 @@
-#include "src/Lightning/Hash/hash.hpp"
+#include "src/Lightning/Hash/crc8.hpp"
 
-const short lightning::Hash::crc8_lookup_table[256] =
+using lightning::CRC8;
+
+const unsigned short CRC8::crc8_lookup_table[256] =
 {
 	0x00, 0x07, 0x0E, 0x09, 0x1C, 0x1B, 0x12, 0x15,
 	0x38, 0x3F, 0x36, 0x31, 0x24, 0x23, 0x2A, 0x2D,
@@ -36,22 +38,18 @@ const short lightning::Hash::crc8_lookup_table[256] =
 	0xE6, 0xE1, 0xE8, 0xEF, 0xFA, 0xFD, 0xF4, 0xF3
 };
 
-short lightning::Hash::crc8gen(const char* buffer)
-{
+unsigned short CRC8::crc8gen(const char * buffer) {
 	int length = 0;
-	do
-	{
+	do {
 		++length;
 	} while (buffer[length] != '\0');
-	int crc8 = 0;
-	while (length--)
-	{
-		crc8 = crc8_lookup_table[crc8 ^ *buffer++];
+	unsigned short crc8 = 0;
+	while (length--) {
+		crc8 = crc8_lookup_table[crc8 ^ * buffer++];
 	}
 	return crc8;
 }
 
-bool lightning::Hash::crc8cmp(const char* what, const char* with)
-{
+bool CRC8::crc8cmp(const char * what, const char * with) {
 	return (crc8gen(what) == crc8gen(with));
 }
