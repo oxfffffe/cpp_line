@@ -81,37 +81,37 @@ void SHA256::sha256gen() {
 	uint32_t state[8];
 	for (uint8_t i = 0, j = 0; i < 16; i++, j += 4) {
 		m[i] = (data[j]     << 24) |
-		       (data[j + 1] << 16) |
-		       (data[j + 2] <<  8) |
-		       (data[j + 3]);
+			   (data[j + 1] << 16) |
+			   (data[j + 2] <<  8) |
+			   (data[j + 3]);
 	}
 	for (uint8_t k = 16; k < 64; k++) {
 		m[k] =  SIG1(m[k - 2])  +
-		        SIG0(m[k - 15]) +
-		        m[k - 7] +
-		        m[k - 16];
+				SIG0(m[k - 15]) +
+				m[k - 7] +
+				m[k - 16];
 	}
 	for(uint8_t i = 0; i < 8; i++) {
 		state[i] = states[i];
 	}
 	for (uint8_t i = 0; i < 64; i++) {
 		xorA	 = ROTR(state[0], 2) XOR
-		           ROTR(state[0], 13) XOR
-		           ROTR(state[0], 22);
+				   ROTR(state[0], 13) XOR
+				   ROTR(state[0], 22);
 		xorE	 = ROTR(state[4], 6) XOR
-		           ROTR(state[4], 11) XOR
-		           ROTR(state[4], 25);
-		ch       = CHOOSE  (state[4],
-                            state[5],
-                            state[6]);
-		maj      = MAJORITY(state[0],
-                            state[1],
-                            state[2]);
-		sum      = m[i] +
-                   SHA256_constants[i] +
-                   state[7] +
-                   ch +
-                   xorE;
+				   ROTR(state[4], 11) XOR
+				   ROTR(state[4], 25);
+		ch		 = CHOOSE  (state[4],
+							state[5],
+							state[6]);
+		maj		 = MAJORITY(state[0],
+							state[1],
+							state[2]);
+		sum		 = m[i] +
+				   SHA256_constants[i] +
+				   state[7] +
+				   ch +
+				   xorE;
 		newA	 = xorA + maj + sum;
 		newE	 = state[3] + sum;
 		state[7] = state[6],
@@ -196,7 +196,7 @@ char* SHA256::read_from_file(const char* filename) {
 	return fcontent;
 }
 
-bool SHA256::hashcmp(char lhs[], const char rhs[]) {
+bool SHA256::hashcmp(char lhs[65], const char rhs[65]) {
 	return CRC32::crc32cmp(lhs, rhs);
 }
 

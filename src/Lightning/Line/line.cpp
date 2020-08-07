@@ -1,10 +1,7 @@
 #include "src/Lightning/Line/line.hpp"
-
-#include "src/Lightning/Allocator/allocator.hpp"
-
 #include "src/Lightning/Hash/crc32.hpp"
-
 #include "src/defines.hpp"
+#include "src/Lightning/Allocator/allocator.hpp"
 
 using namespace lightning;
 
@@ -32,6 +29,10 @@ void Line::operator=(Line& other) {
 
 void Line::operator=(const char* other) {
 	this->str = (char*)other;
+}
+
+void Line::move(const Line& other) {
+	this->str = other.str;
 }
 
 std::ostream& lightning::operator <<
@@ -113,8 +114,8 @@ char* Line::to_upper() noexcept {
 	s16 i = 0;
 	strcpy(str, this->str);
 	do {
-        if (str[i] > __a and str[i] < __z) {
-            str[i] -= 0x20;
+		if (str[i] > __a and str[i] < __z) {
+			str[i] -= 0x20;
 		}
 	} while (str[i++] != '\0');
 	return str;
@@ -129,8 +130,8 @@ char* Line::to_lower() noexcept {
 	s16 i = 0;
 	strcpy(str, this->str);
 	do {
-        if (str[i] > __A and str[i] < __Z) {
-            str[i] += 0x20;
+		if (str[i] > __A and str[i] < __Z) {
+			str[i] += 0x20;
 		}
 	} while (str[i++] != '\0');
 	return str;
@@ -146,11 +147,8 @@ char* Line::reverse() noexcept {
 	#endif
 	strcpy(str, this->str);
 	while (i < l / 2) {
-		/*!
-		 * @brief reverse using XOR
-		 */
 		str[i] ^= str[l - i - 1];
-		str[l - i - 1] ^= str[i];
+		str[l - i - 1] ^= str[i]; // reverse str[i] with str[l-i-1] using XOR
 		str[i] ^= str[l - i - 1];
 		++i;
 	}

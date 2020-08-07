@@ -1,11 +1,11 @@
-#pragma once
+#ifndef __LINE_H
+#define __LINE_H
 
 typedef unsigned short s16;
 
 #include <ostream>
 #include <istream>
 #include <string.h> ///< strcat, strcmp, ...
-//#include "src/defines.hpp" ///< unsigned short -> s16
 #include "src/Lightning/namespace/lightning.hpp"
 
 /*!
@@ -14,7 +14,7 @@ typedef unsigned short s16;
  */
 class lightning::Line {
 public:
-	Line(){};
+	explicit Line(){};
 
 	/*!
 	 * @brief Constructor copies @param to
@@ -98,6 +98,9 @@ public:
 	char*
 	reverse() noexcept;
 
+	void
+	move(const Line&);
+
 	/*!
 	 * @brief to_char_array method needed
 	 * for the Regex class,
@@ -133,4 +136,4 @@ public:
 private:
 	char* str;
 };
-
+#endif //__LINE_H

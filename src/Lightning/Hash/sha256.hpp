@@ -47,7 +47,7 @@ public:
 	/*!
 	 * @brief Compare two hashes.
 	 */
-	static bool hashcmp(char lhs[], const char rhs[]);
+	static bool hashcmp(char lhs[65], const char rhs[65]);
 
 private:
 	/*!
