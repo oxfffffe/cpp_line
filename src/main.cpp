@@ -5,6 +5,7 @@
 #include "src/Lightning/Hash/crc32.hpp"
 #include "src/Lightning/Hash/sha256.hpp"
 #include "src/Lightning/Math/math.hpp"
+#include "src/Lightning/Complex/complex.hpp"
 #include "src/defines.hpp"
 #include <iostream>
 
@@ -15,6 +16,7 @@ using lightning::CRC8;
 using lightning::CRC16;
 using lightning::CRC32;
 using lightning::Math;
+using lightning::Complex;
 using std::cout;
 using std::endl;
 
@@ -137,13 +139,33 @@ int main(void)
 //	printf("CRC-32 compare: %d\n",	CRC32::crc32cmp(string, "crc is a very simple algorithm"));
 #endif//__DEBUG_HASH
 #ifdef __DEBUG_MATH
-	cout << "Math::max(1,2): " << Math::max(1, 2) << endl;
-	cout << "Math::min(1,2): " << Math::min(1, 2) << endl;
-	cout << "Math::roundDown(3.14): " << Math::roundDown(3.14) << endl;
-	cout << "Math::roundUp(3.14): " << Math::roundUp(3.14) << endl;
-	cout << "Math::squareRoot(81): " << Math::squareRoot(81) << endl;
-	cout << "Math::power(2, 10): " << Math::power(2, 10) << endl;
-
+	cout <<"Math::squareRoot<float>(8192): ";
+	cout << Math::squareRoot<float>(8192) << endl;
+	cout <<"Math::power<float>(2.1, 10): ";
+	cout << Math::power<float>(2.1, 10) << endl;
+	cout <<"Math::squareRoot<float>('d'): ";
+	cout << Math::squareRoot<float>('d') << endl;
+	cout <<"Math::max((Math::power<int>(2, 10)), Math::squareRoot<int>(81)): ";
+	cout << Math::max((Math::power<int>(2, 10)),
+					   Math::squareRoot<int>(81)) << endl;
+	cout <<"Math::min((Math::power<int>(2, 10)), Math::squareRoot<int>(81)): ";
+	cout << Math::min((Math::power<int>(2, 10)),
+					   Math::squareRoot<int>(81)) << endl;
+	cout <<"Math::roundUp<float>(2.3): ";
+	cout << Math::roundUp<float>(2.3) << endl;
+	cout <<"Math::roundDown<float>(2.923)";
+	cout << Math::roundDown<float>(2.923) << endl;
+	cout << endl;
+	Complex<float> complex(123, 3);
+	Complex<float> complex2(12, 100);
+	cout << "(123 + 3) + (12 + 100) = ";
+	cout << complex + complex2 << endl;
+	cout << "(123 + 3) - (12 + 100) = ";
+	cout << complex - complex2 << endl;
+	cout << "(123 + 3) / (12 + 100) = ";
+	cout << complex / complex2 << endl;
+	cout << "(123 + 3) * (12 + 100) = ";
+	cout << complex * complex2 << endl;
 #endif//__DEBUG_MATH
 #ifdef	__FINISHED_AT
 		__FINISHED_AT

@@ -96,22 +96,22 @@ void SHA256::sha256gen() {
 	}
 	for (uint8_t i = 0; i < 64; i++) {
 		xorA	 = ROTR(state[0], 2) XOR
-		           ROTR(state[0], 13) XOR
-		           ROTR(state[0], 22);
+				   ROTR(state[0], 13) XOR
+				   ROTR(state[0], 22);
 		xorE	 = ROTR(state[4], 6) XOR
-			   ROTR(state[4], 11) XOR
-			   ROTR(state[4], 25);
-		ch       = CHOOSE  (state[4],
+				   ROTR(state[4], 11) XOR
+				   ROTR(state[4], 25);
+		ch		 = CHOOSE  (state[4],
 							state[5],
 							state[6]);
-		maj      = MAJORITY(state[0],
+		maj		 = MAJORITY(state[0],
 							state[1],
 							state[2]);
-		sum	 = m[i] +
-			   SHA256_constants[i] +
-		           state[7] +
-			   ch +
-			   xorE;
+		sum		 = m[i] +
+				   SHA256_constants[i] +
+				   state[7] +
+				   ch +
+				   xorE;
 		newA	 = xorA + maj + sum;
 		newE	 = state[3] + sum;
 		state[7] = state[6],

@@ -2,7 +2,7 @@ TEMPLATE = app
 CONFIG += console c++17
 CONFIG -= app_bundle
 CONFIG -= qt
-QMAKE_CXXFLAGS += -O2 -lcrypto
+QMAKE_CXXFLAGS += -O2
 
 SOURCES += \
         src/Lightning/Hash/crc16.cpp            \
@@ -21,6 +21,8 @@ HEADERS += \
         src/Lightning/Hash/sha256.hpp           \
         src/Lightning/Math/math.hpp             \
         src/Lightning/Math/math.tcc             \
+        src/Lightning/Complex/complex.hpp       \
+        src/Lightning/Complex/complex.tcc       \
         src/defines.hpp                         \
         src/Lightning/namespace/lightning.hpp   \
         src/Lightning/Line/line.hpp             \

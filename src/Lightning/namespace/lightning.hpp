@@ -13,6 +13,8 @@ namespace lightning {
 	class CRC32;
 	class SHA256;
 	class Math;
+	template<typename T>
+	class Complex;
 	void  swap(Line&, Line&);
 	int   strlen(const char*);
 	void* memset(void*, int, int);
