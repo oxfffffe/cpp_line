@@ -1,13 +1,20 @@
-#include "src/Lightning/Line/line.hpp"
-#include "src/Lightning/Regex/regex.hpp"
-#include "src/Lightning/Hash/crc8.hpp"
-#include "src/Lightning/Hash/crc16.hpp"
-#include "src/Lightning/Hash/crc32.hpp"
-#include "src/Lightning/Hash/sha256.hpp"
+//#include "src/Lightning/Line/line.hpp"
+//#include "src/Lightning/Regex/regex.hpp"
+//#include "src/Lightning/Hash/crc8.hpp"
+//#include "src/Lightning/Hash/crc16.hpp"
+//#include "src/Lightning/Hash/crc32.hpp"
+//#include "src/Lightning/Hash/sha256.hpp"
 #include "src/Lightning/Math/math.hpp"
 #include "src/Lightning/Complex/complex.hpp"
-#include "src/defines.hpp"
+//#include "src/Lightning/Array/array.hpp"
 #include <iostream>
+
+//#define __DEBUG_LINE
+//#define __DEBUG_REGEX
+//#define __DEBUG_HASH
+//#define __DEBUG_MATH
+#define __DEBUG_LOG
+//#define __DEBUG_ARRAY
 
 using lightning::Line;
 using lightning::Regex;
@@ -17,11 +24,13 @@ using lightning::CRC16;
 using lightning::CRC32;
 using lightning::Math;
 using lightning::Complex;
+using lightning::Array;
 using std::cout;
 using std::endl;
 
 int main(void)
 {
+const clock_t start = clock();
 #ifdef	__START_TIME
 		__START_TIME
 #endif
@@ -53,9 +62,6 @@ int main(void)
 #define TEXT 0
 #define HASH 1
 
-//////////////////////
-//CHECK HASH OF STRING
-//////////////////////
 	const char* sha256_values[ARR_SIZE][2] =
 	{
 		{
@@ -138,37 +144,118 @@ int main(void)
 //	printf("CRC-16 compare: %d\n",	CRC16::crc16cmp(string, "crc is a very simple algorithm"));
 //	printf("CRC-32 compare: %d\n",	CRC32::crc32cmp(string, "crc is a very simple algorithm"));
 #endif//__DEBUG_HASH
+#ifdef __DEBUG_ARRAY
+	Array<int, 3> array;
+	array[0] = 1;
+	array[1] = 2;
+	array[2] = 3;
+	Array<int, 3> array2;
+	array2[0] = 1;
+	array2[1] = 2;
+	array2[2] = 3;
+	cout << (array < array2) << endl;
+	cout << (array > array2) << endl;
+	cout << (array == array2) << endl;
+	cout << (array != array2) << endl;
+
+#endif//__DEBUG_ARRAY
 #ifdef __DEBUG_MATH
-	cout <<"Math::squareRoot<float>(8192): ";
-	cout << Math::squareRoot<float>(8192) << endl;
-	cout <<"Math::power<float>(2.1, 10): ";
-	cout << Math::power<float>(2.1, 10) << endl;
-	cout <<"Math::squareRoot<float>('d'): ";
-	cout << Math::squareRoot<float>('d') << endl;
-	cout <<"Math::max((Math::power<int>(2, 10)), Math::squareRoot<int>(81)): ";
-	cout << Math::max((Math::power<int>(2, 10)),
-					   Math::squareRoot<int>(81)) << endl;
-	cout <<"Math::min((Math::power<int>(2, 10)), Math::squareRoot<int>(81)): ";
-	cout << Math::min((Math::power<int>(2, 10)),
-					   Math::squareRoot<int>(81)) << endl;
-	cout <<"Math::roundUp<float>(2.3): ";
-	cout << Math::roundUp<float>(2.3) << endl;
-	cout <<"Math::roundDown<float>(2.923)";
-	cout << Math::roundDown<float>(2.923) << endl;
-	cout << endl;
-	Complex<float> complex(123, 3);
-	Complex<float> complex2(12, 100);
-	cout << "(123 + 3) + (12 + 100) = ";
-	cout << complex + complex2 << endl;
-	cout << "(123 + 3) - (12 + 100) = ";
-	cout << complex - complex2 << endl;
-	cout << "(123 + 3) / (12 + 100) = ";
-	cout << complex / complex2 << endl;
-	cout << "(123 + 3) * (12 + 100) = ";
-	cout << complex * complex2 << endl;
+
+//	cout <<  Math::max<int>(Math::fabs<unsigned int>(Math::cos<int>(Math::min<int>(999, 888))), \
+//							Math::max<int>(Math::tg<int>(Math::sin<int>(Math::squareRoot<int>
+//						   (Math::sin<int>(30) == Math::cos<int>(Math::max<int>(Math::roundUp<float>(59.1), \
+//							Math::squareRoot<int>(Math::power<int>(Math::power<int>(2, Math::sin(120)), \
+//							Math::cos<float>(Math::tg<float>(Math::min<int>(Math::roundUp(1.1), \
+//							Math::sin<float>(Math::fabs<int>(-100)))))))))))), \
+//							Math::roundUp<float>(Math::roundDown<float>(11.3))));
+
+
+//	cout <<"Math::squareRoot<float>(8192):       ";
+//	cout << Math::squareRoot<float>(8192) << endl;
+//	cout << Math::root<float>(81, 3) << endl;
+//	cout <<"Math::power(2, 10):         ";
+//	cout << Math::power(2, 2) << endl;
+//	cout << Math::root<double>(81, 2) << endl;
+//	cout <<"Math::max((Math::power<int>(2, 10)), Math::squareRoot<int>(81)): ";
+//	cout << Math::max((Math::power<int>(2, 10)), Math::squareRoot<int>(81)) << endl;
+//	cout <<"Math::min((Math::power<int>(2, 10)), Math::squareRoot<int>(81)): ";
+//	cout << Math::min((Math::power<int>(2, 10)), Math::squareRoot<int>(81)) << endl;
+//	cout <<"Math::roundUp<float>(2.3):           ";
+//	cout << Math::roundUp<float>(2.3) << endl;
+//	cout <<"Math::roundDown<float>(2.923):       ";
+//	cout << Math::roundDown<float>(2.923) << endl;
+//	cout <<"Math::fabs<float> (1234.5):          ";
+//	cout << Math::fabs<float> (1234.5) << endl;
+//	cout <<"Math::fabs<float>(-1234.5):          ";
+//	cout << Math::fabs<float>(-1234.5) << endl;
+//	cout <<"Math::sin<float>(30):                ";
+//	cout << Math::sin<float>(30) << endl;
+//	cout <<"Math::cos<float>(29.3):              ";
+//	cout << Math::cos<float>(29.3) << endl;
+//	cout <<"Math::tg<float>(3):                  ";
+//	cout << Math::tg<float>(3) << endl;
+//	cout <<"Math::ctg<float>(3):                 ";
+//	cout << Math::ctg<float>(3) << endl;
+//	cout << Math::log<float>(1.4) << endl;
+//	cout << Math::ln<float>(1.4) << endl;
+//	cout << (130 >> 1) << endl;
+//	Complex<float> complex(7, 9);
+//	Complex<float> complex2(4, 2);
+//	cout << "complex (7 + 9) + (4 + 2) =         ";
+//	cout << complex + complex2 << endl;
+//	cout << "complex (7 + 9) - (4 + 2) =         ";
+//	cout << complex - complex2 << endl;
+//	cout << "complex (7 + 9) / (4 + 2) =         ";
+//	cout << complex / complex2 << endl;
+//	cout << "complex (7 + 9) * (4 + 2) =         ";
+//	cout << complex * complex2 << endl;
+//	cout << "complex1 == complex2:               ";
+//	cout << (complex != complex2) << endl;
 #endif//__DEBUG_MATH
+#ifdef __DEBUG_LOG
+	double logs[10][2] {
+		{
+			1, 0
+		},
+		{
+			2, 0.301030f
+		},
+		{
+			3, 0.477121f
+		},
+		{
+			4, 0.602060f
+		},
+		{
+			5, 0.698970f
+		},
+		{
+			6, 0.778151f
+		},
+		{
+			7, 0.845098f
+		},
+		{
+			8, 0.903090f
+		},
+		{
+			9, 0.954243f
+		},
+		{
+			10, 1.0f
+		}
+	};
+	for (int i = 0; i < 10; i++) {
+		cout << "log(" << logs[i][0] << ") = "
+			 <<  Math::log<float>(logs[i][0])
+			 << ", original = " << logs[i][1] << endl;
+	}
+#endif//__DEBUG_LOG
 #ifdef	__FINISHED_AT
 		__FINISHED_AT
 #endif
+	printf("\nfinished at %f secs\n",\
+	static_cast<double>\
+	(clock() - start) / CLOCKS_PER_SEC);
 	return EXIT_SUCCESS;
 }

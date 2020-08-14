@@ -3,6 +3,11 @@
 
 #include "src/Lightning/namespace/lightning.hpp"
 
+
+/*!
+ * @brief Math class -
+ * implementation of the most commonly used mathematical algorithms
+ */
 class lightning::Math {
 public:
 	template<typename T>
@@ -24,6 +29,9 @@ public:
 	static auto roundUp(const T expr) noexcept -> T;
 
 	template<typename T>
+	static auto root(const T base, const T expr) noexcept -> T;
+
+	template<typename T>
 	static auto squareRoot(const T expr) noexcept -> T;
 
 	template<typename T>
@@ -37,6 +45,13 @@ public:
 
 	template<typename T>
 	static auto ctg(const T expr) noexcept -> T;
+
+	template<typename T>
+	static auto log(T expr) noexcept -> T;
+
+	template<typename T>
+	static auto ln(T expr) noexcept -> T;
+
 };
 
 #include "math.tcc"

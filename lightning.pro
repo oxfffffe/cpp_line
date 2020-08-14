@@ -19,6 +19,8 @@ HEADERS += \
         src/Lightning/Hash/crc32.hpp            \
         src/Lightning/Hash/crc8.hpp             \
         src/Lightning/Hash/sha256.hpp           \
+        src/Lightning/Array/array.hpp           \
+        src/Lightning/Array/array.tcc           \
         src/Lightning/Math/math.hpp             \
         src/Lightning/Math/math.tcc             \
         src/Lightning/Complex/complex.hpp       \

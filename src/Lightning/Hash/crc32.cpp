@@ -76,7 +76,7 @@ unsigned long CRC32::crc32gen(const char* buffer) {
 	} while (buffer[length] != '\0');
 	long crc32 = 0xFFFFFFFF;
 	while (length--) {
-		crc32 = (crc32 >> 8) ^crc32_lookup_table[(crc32 ^ *buffer++) & 0xFF];
+		crc32 = (crc32 >> 8) ^ crc32_lookup_table[(crc32 ^ *buffer++) & 0xFF];
 	}
 	return crc32 ^ 0xFFFFFFFF;
 }

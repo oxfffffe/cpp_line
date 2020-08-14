@@ -4,31 +4,45 @@
 #include "src/Lightning/namespace/lightning.hpp"
 #include <ostream>
 
+
+/*!
+ * @brief Complex numbers implementation
+ */
 template<typename T>
 class lightning::Complex {
 public:
-	explicit Complex(T m_real, T m_image);
+	explicit Complex(void);
 
-	template<typename U>
-	friend std::ostream& operator<<(std::ostream& out, const Complex<U>& expr) {
-		return out << "(" << expr.real << " + " << expr.image << "i" << ")";
+	explicit Complex(T, T);
+
+	friend std::ostream& operator<<(std::ostream& out, const Complex<T>& expr) {
+		if (expr.real == 0) {
+			out << "(" << expr.image << "i" << ")";
+		} else {
+			out << "(" << expr.real << " + " << expr.image << "i" << ")";
+		}
+		return out;
 	}
 
-	Complex<T>& operator+=(const Complex<T>&);
+	Complex<T>& operator+=(const Complex<T>&) noexcept;
 
-	Complex<T> operator+(const Complex<T>&);
+	Complex<T> operator+(const Complex<T>&) noexcept;
 
-	Complex<T>& operator-=(const Complex<T>&);
+	Complex<T>& operator-=(const Complex<T>&) noexcept;
 
-	Complex<T> operator-(const Complex<T>&);
+	Complex<T> operator-(const Complex<T>&) noexcept;
 
-	Complex<T>& operator*=(const Complex<T>&);
+	Complex<T>& operator*=(const Complex<T>&) noexcept;
 
-	Complex<T> operator*(const Complex<T>&);
+	Complex<T> operator*(const Complex<T>&) noexcept;
 
-	Complex<T>& operator/=(const Complex<T>&);
+	Complex<T>& operator/=(const Complex<T>&) noexcept;
 
-	Complex<T> operator/(const Complex<T>&);
+	Complex<T> operator/(const Complex<T>&) noexcept;
+
+	bool operator==(const Complex<T>&) noexcept;
+
+	bool operator!=(const Complex<T>&) noexcept;
 
 private:
 	T real;

@@ -7,6 +7,7 @@ typedef unsigned short s16;
 #include <istream>
 #include <string.h> ///< strcat, strcmp, ...
 #include "src/Lightning/namespace/lightning.hpp"
+#include "boost/array.hpp"
 
 /*!
  * @brief Line represents class to work
