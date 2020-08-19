@@ -15,7 +15,7 @@ Array<T, Size>::Array()
 template<class T, uint Size>
 Array<T, Size>::Array(initializer_list<T> static_array) {
 	std::copy(static_array.begin(),
-			  static_array.end(), array);
+	          static_array.end(), array);
 }
 
 template<class T, uint Size>
